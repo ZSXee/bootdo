@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<input id="leader" name="leader" th:value="${leader}" type="hidden">
+		<div class="row">
+			<div class="col-sm-11">
+				<div class="ibox">
+					<div class="ibox-body">
+						<ul class="nav nav-tabs" id="myTab">
+							<li class="active"><a data-toggle="tab" href="#tab-4"><i
+									class="fa fa-file-text"></i>部门待办任务</a></li>
+							<li class=""><a data-toggle="tab" href="#tab-1"><i
+									class="fa fa-file-text"></i>待办任务</a></li>
+							<li class=""><a data-toggle="tab" href="#tab-2"><i
+									class="fa fa-briefcase"></i>已办任务</a></li>
+							<li class=""><a data-toggle="tab" href="#tab-5"><i
+									class="fa fa-file-text"></i>我发起的任务</a></li>
+							<li class=""><a data-toggle="tab" href="#tab-3"><i
+									class="fa fa-briefcase"></i>发起任务</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane">
+								<table id="exampleTable1" data-mobile-responsive="true"></table>
+							</div>
+							<div id="tab-2" class="tab-pane">
+								<div class="fixed-table-toolbar">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<span class="glyphicon glyphicon-th-list"
+														aria-hidden="true"></span> 条件查找
+												</div>
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">
+																		事项名称</div>
+																	<div class="col-md-8">
+																		<input id="contactName" type="text"
+																			class="form-control" placeholder="事项名称" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">
+																		发起人姓名</div>
+																	<div class="col-md-8">
+																		<input id="assignee" type="text" class="form-control"
+																			placeholder="发起人姓名" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">
+																		发起机构名称</div>
+																	<div class="col-md-8">
+																		<input id="cntAdminDep" name="cntAdminDep"
+																			class="form-control" type="text" placeholder="发起机构名称"
+																			ondblclick="openDept()" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">开始时间</div>
+																	<div class="col-md-8">
+																		<input id="startTime" type="date" class="form-control"
+																			placeholder="开始时间" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">
+																		结束时间</div>
+																	<div class="col-md-8">
+																		<input id="endTime" type="date" class="form-control"
+																			placeholder="结束时间" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="columns pull-right">
+																	<div class="col-md-8">
+																		<button class="btn btn-success" onclick="reLoad2()">查询</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<table id="exampleTable2" data-mobile-responsive="true"></table>
+							</div>
+							<div id="tab-3" class="tab-pane ">
+								<table id="exampleTable3" data-mobile-responsive="true"></table>
+							</div>
+							<div id="tab-4" class="tab-pane active">
+								<table id="exampleTable4" data-mobile-responsive="true"></table>
+							</div>
+							<div id="tab-5" class="tab-pane">
+								<div class="fixed-table-toolbar">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<span class="glyphicon glyphicon-th-list"
+														aria-hidden="true"></span> 条件查找
+												</div>
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">
+																		事项名称</div>
+																	<div class="col-md-8">
+																		<input id="searchName5" type="text"
+																			class="form-control" placeholder="事项名称" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">开始时间</div>
+																	<div class="col-md-8">
+																		<input id="startTime5" type="date" class="form-control"
+																			placeholder="开始时间" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="form-group">
+																	<div class="col-md-4 control-label" for="select">
+																		结束时间</div>
+																	<div class="col-md-8">
+																		<input id="endTime5" type="date" class="form-control"
+																			placeholder="结束时间" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4 col-sm-8 col-xs-8 col-xxs-12">
+															<div class="form-horizontal">
+																<div class="columns pull-right">
+																	<div class="col-md-8">
+																		<button class="btn btn-success" onclick="reLoad5()">查询</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<table id="exampleTable5" data-mobile-responsive="true"></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+		<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_add_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="contact:tbContactInfo:add">
+			<script type="text/javascript">
+				s_add_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/act/task/exampleTable1.js"></script>
+	<script type="text/javascript"
+		src="/js/appjs/act/task/exampleTable2.js"></script>
+	<script type="text/javascript"
+		src="/js/appjs/act/task/exampleTable3.js"></script>
+	<script type="text/javascript"
+		src="/js/appjs/act/task/exampleTable4.js"></script>
+	<script type="text/javascript"
+		src="/js/appjs/act/task/exampleTable5.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.AddhiCommentDao">
+
+	<select id="get" resultType="com.bootdo.activiti.domain.AddhiCommentDO">
+		select ID_,TYPE_,TIME_,USER_ID_,TASK_ID_,PROC_INST_ID_,ACTION_,MESSAGE_ from act_addhi_comment where ID_ = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.activiti.domain.AddhiCommentDO">
+		select ID_,TYPE_,TIME_,USER_ID_,TASK_ID_,PROC_INST_ID_,ACTION_,MESSAGE_ from act_addhi_comment
+        <where>  
+		  		  <if test="id != null and id != ''"> and ID_ = #{id} </if>
+		  		  <if test="type != null and type != ''"> and TYPE_ = #{type} </if>
+		  		  <if test="time != null and time != ''"> and TIME_ = #{time} </if>
+		  		  <if test="userId != null and userId != ''"> and USER_ID_ = #{userId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and TASK_ID_ = #{taskId} </if>
+		  		  <if test="procInstId != null and procInstId != ''"> and PROC_INST_ID_ = #{procInstId} </if>
+		  		  <if test="action != null and action != ''"> and ACTION_ = #{action} </if>
+		  		  <if test="message != null and message != ''"> and MESSAGE_ = #{message} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by TIME_ desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from act_addhi_comment
+		 <where>  
+		  		  <if test="id != null and id != ''"> and ID_ = #{id} </if>
+		  		  <if test="type != null and type != ''"> and TYPE_ = #{type} </if>
+		  		  <if test="time != null and time != ''"> and TIME_ = #{time} </if>
+		  		  <if test="userId != null and userId != ''"> and USER_ID_ = #{userId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and TASK_ID_ = #{taskId} </if>
+		  		  <if test="procInstId != null and procInstId != ''"> and PROC_INST_ID_ = #{procInstId} </if>
+		  		  <if test="action != null and action != ''"> and ACTION_ = #{action} </if>
+		  		  <if test="message != null and message != ''"> and MESSAGE_ = #{message} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.activiti.domain.AddhiCommentDO">
+		insert into act_addhi_comment
+		(
+			ID_, 
+			TYPE_, 
+			TIME_, 
+			USER_ID_, 
+			TASK_ID_, 
+			PROC_INST_ID_, 
+			ACTION_, 
+			MESSAGE_
+		)
+		values
+		(
+			#{id}, 
+			#{type}, 
+			#{time}, 
+			#{userId}, 
+			#{taskId}, 
+			#{procInstId}, 
+			#{action}, 
+			#{message}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.activiti.domain.AddhiCommentDO">
+		update act_addhi_comment 
+		<set>
+			<if test="type != null">TYPE_ = #{type}, </if>
+			<if test="time != null">TIME_ = #{time}, </if>
+			<if test="userId != null">USER_ID_ = #{userId}, </if>
+			<if test="taskId != null">TASK_ID_ = #{taskId}, </if>
+			<if test="procInstId != null">PROC_INST_ID_ = #{procInstId}, </if>
+			<if test="action != null">ACTION_ = #{action}, </if>
+			<if test="message != null">MESSAGE_ = #{message}</if>
+		</set>
+		where ID_ = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from act_addhi_comment where ID_ = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from act_addhi_comment where ID_ in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.contact.dao.TbContactInfoDao">
+
+	<select id="get" resultType="com.bootdo.contact.domain.TbContactInfoDO">
+		select CNT_ID,PROC_INS_ID,CNT_CODE,CNT_NAME,CNT_TYPE,CNT_PRICE,CNT_AMOUNT,CNT_QUALITY,CNT_ADMIN,CNT_SIGN_TIME,CNT_TERM,CNT_PERFOM_PLACE,CNT_PERFOM_MODE,CNT_STANDARD,CNT_BREACH,CNT_METHOD,CNT_RESERVE1,CNT_RESERVE2,CNT_RESERVE3,CNT_RESERVE4,CNT_RESERVE5,sqr,sex,sfz,dw,zw,gw,sdate,qdate,bh,cn,site,"add",phone,sl,jrsl from tb_contact_info where PROC_INS_ID = #{value}
+	</select>
+	<select id="getprocid" resultType="com.bootdo.contact.domain.TbContactInfoDO">
+		select PROC_DEF_ID from act_hi_procinst where PROC_INST_ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.contact.domain.TbContactInfoDO">
+		select CNT_ID,PROC_INS_ID,CNT_CODE,CNT_NAME,CNT_TYPE,CNT_PRICE,CNT_AMOUNT,CNT_QUALITY,CNT_ADMIN,CNT_SIGN_TIME,CNT_TERM,CNT_PERFOM_PLACE,CNT_PERFOM_MODE,CNT_STANDARD,CNT_BREACH,CNT_METHOD,CNT_RESERVE1,CNT_RESERVE2,CNT_RESERVE3,CNT_RESERVE4,CNT_RESERVE5,sqr,sex,sfz,dw,zw,gw,sdate,qdate,bh,cn,site,"add",phone,sl,jrsl from tb_contact_info
+        <where>
+		  		  <if test="cntId != null and cntId != ''"> and CNT_ID = #{cntId} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="cntCode != null and cntCode != ''"> and CNT_CODE = #{cntCode} </if>
+		  		  <if test="cntName != null and cntName != ''"> and CNT_NAME = #{cntName} </if>
+		  		  <if test="cntType != null and cntType != ''"> and CNT_TYPE = #{cntType} </if>
+		  		  <if test="cntPrice != null and cntPrice != ''"> and CNT_PRICE = #{cntPrice} </if>
+		  		  <if test="cntAmount != null and cntAmount != ''"> and CNT_AMOUNT = #{cntAmount} </if>
+		  		  <if test="cntQuality != null and cntQuality != ''"> and CNT_QUALITY = #{cntQuality} </if>
+		  		  <if test="cntAdmin != null and cntAdmin != ''"> and CNT_ADMIN = #{cntAdmin} </if>
+		  		  <if test="cntSignTime != null and cntSignTime != ''"> and CNT_SIGN_TIME = #{cntSignTime} </if>
+		  		  <if test="cntTerm != null and cntTerm != ''"> and CNT_TERM = #{cntTerm} </if>
+		  		  <if test="cntPerfomPlace != null and cntPerfomPlace != ''"> and CNT_PERFOM_PLACE = #{cntPerfomPlace} </if>
+		  		  <if test="cntPerfomMode != null and cntPerfomMode != ''"> and CNT_PERFOM_MODE = #{cntPerfomMode} </if>
+		  		  <if test="cntStandard != null and cntStandard != ''"> and CNT_STANDARD = #{cntStandard} </if>
+		  		  <if test="cntBreach != null and cntBreach != ''"> and CNT_BREACH = #{cntBreach} </if>
+		  		  <if test="cntMethod != null and cntMethod != ''"> and CNT_METHOD = #{cntMethod} </if>
+		  		  <if test="cntReserve1 != null and cntReserve1 != ''"> and CNT_RESERVE1 = #{cntReserve1} </if>
+		  		  <if test="cntReserve2 != null and cntReserve2 != ''"> and CNT_RESERVE2 = #{cntReserve2} </if>
+		  		  <if test="cntReserve3 != null and cntReserve3 != ''"> and CNT_RESERVE3 = #{cntReserve3} </if>
+		  		  <if test="cntReserve4 != null and cntReserve4 != ''"> and CNT_RESERVE4 = #{cntReserve4} </if>
+		  		  <if test="cntReserve5 != null and cntReserve5 != ''"> and CNT_RESERVE5 = #{cntReserve5} </if>
+				   <if test="sqr != null and sqr != ''"> and sqr = #{sqr} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="sfz != null and sfz != ''"> and sfz = #{sfz} </if>
+		  		  <if test="dw != null and dw != ''"> and dw = #{dw} </if>
+		  		  <if test="zw != null and zw != ''"> and zw = #{zw} </if>
+		  		  <if test="gw != null and gw != ''"> and gw = #{gw} </if>
+		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
+		  		  <if test="qdate != null and qdate != ''"> and qdate = #{qdate} </if>
+		  		  <if test="bh != null and bh != ''"> and bh = #{bh} </if>
+		  		  <if test="cn != null and cn != ''"> and cn = #{cn} </if>
+		  		  <if test="site != null and site != ''"> and site = #{site} </if>
+		  		  <if test="add != null and add != ''"> and add = #{add} </if>
+		  		  <if test="phone !=null and phone !=''">and phone = #{phone} </if>
+		  		  <if test="sl != null and sl != ''"> and sl = #{sl} </if>
+		  		  <if test="jrsl != null and jrsl != ''"> and jrsl = #{jrsl} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by CNT_ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from tb_contact_info
+		 <where>
+		  		  <if test="cntId != null and cntId != ''"> and CNT_ID = #{cntId} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="cntCode != null and cntCode != ''"> and CNT_CODE = #{cntCode} </if>
+		  		  <if test="cntName != null and cntName != ''"> and CNT_NAME = #{cntName} </if>
+		  		  <if test="cntType != null and cntType != ''"> and CNT_TYPE = #{cntType} </if>
+		  		  <if test="cntPrice != null and cntPrice != ''"> and CNT_PRICE = #{cntPrice} </if>
+		  		  <if test="cntAmount != null and cntAmount != ''"> and CNT_AMOUNT = #{cntAmount} </if>
+		  		  <if test="cntQuality != null and cntQuality != ''"> and CNT_QUALITY = #{cntQuality} </if>
+		  		  <if test="cntAdmin != null and cntAdmin != ''"> and CNT_ADMIN = #{cntAdmin} </if>
+		  		  <if test="cntSignTime != null and cntSignTime != ''"> and CNT_SIGN_TIME = #{cntSignTime} </if>
+		  		  <if test="cntTerm != null and cntTerm != ''"> and CNT_TERM = #{cntTerm} </if>
+		  		  <if test="cntPerfomPlace != null and cntPerfomPlace != ''"> and CNT_PERFOM_PLACE = #{cntPerfomPlace} </if>
+		  		  <if test="cntPerfomMode != null and cntPerfomMode != ''"> and CNT_PERFOM_MODE = #{cntPerfomMode} </if>
+		  		  <if test="cntStandard != null and cntStandard != ''"> and CNT_STANDARD = #{cntStandard} </if>
+		  		  <if test="cntBreach != null and cntBreach != ''"> and CNT_BREACH = #{cntBreach} </if>
+		  		  <if test="cntMethod != null and cntMethod != ''"> and CNT_METHOD = #{cntMethod} </if>
+		  		  <if test="cntReserve1 != null and cntReserve1 != ''"> and CNT_RESERVE1 = #{cntReserve1} </if>
+		  		  <if test="cntReserve2 != null and cntReserve2 != ''"> and CNT_RESERVE2 = #{cntReserve2} </if>
+		  		  <if test="cntReserve3 != null and cntReserve3 != ''"> and CNT_RESERVE3 = #{cntReserve3} </if>
+		  		  <if test="cntReserve4 != null and cntReserve4 != ''"> and CNT_RESERVE4 = #{cntReserve4} </if>
+		  		  <if test="cntReserve5 != null and cntReserve5 != ''"> and CNT_RESERVE5 = #{cntReserve5} </if>
+		  		  <if test="sqr != null and sqr != ''"> and sqr = #{sqr} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="sfz != null and sfz != ''"> and sfz = #{sfz} </if>
+		  		  <if test="dw != null and dw != ''"> and dw = #{dw} </if>
+		  		  <if test="zw != null and zw != ''"> and zw = #{zw} </if>
+		  		  <if test="gw != null and gw != ''"> and gw = #{gw} </if>
+		  		  <if test="sdate != null and sdate != ''"> and sdate = #{sdate} </if>
+		  		  <if test="qdate != null and qdate != ''"> and qdate = #{qdate} </if>
+		  		  <if test="bh != null and bh != ''"> and bh = #{bh} </if>
+		  		  <if test="cn != null and cn != ''"> and cn = #{cn} </if>
+		  		  <if test="site != null and site != ''"> and site = #{site} </if>
+		  		  <if test="add != null and add != ''"> and add = #{add} </if>
+		  		  <if test="phone != null and phone !=''"> and phone = #{phone} </if>
+		  		  <if test="sl != null and sl != ''"> and sl = #{sl} </if>
+		  		  <if test="jrsl != null and jrsl != ''"> and jrsl = #{jrsl} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.contact.domain.TbContactInfoDO">
+		insert into tb_contact_info
+		(
+			CNT_ID,
+			PROC_INS_ID,
+			CNT_CODE,
+			CNT_NAME,
+			CNT_TYPE,
+			CNT_PRICE,
+			CNT_AMOUNT,
+			CNT_QUALITY,
+			CNT_ADMIN,
+			CNT_SIGN_TIME,
+			CNT_TERM,
+			CNT_PERFOM_PLACE,
+			CNT_PERFOM_MODE,
+			CNT_STANDARD,
+			CNT_BREACH,
+			CNT_METHOD,
+			CNT_RESERVE1,
+			CNT_RESERVE2,
+			CNT_RESERVE3,
+			CNT_RESERVE4,
+			CNT_RESERVE5,
+			sqr,
+			sex,
+			sfz,
+			dw,
+			zw,
+			gw,
+			sdate,
+			qdate,
+			bh,
+			cn,
+			site,
+			"add",
+			phone,
+			sl,
+			jrsl
+		)
+		values
+		(
+			#{cntId},
+			#{procInsId},
+			#{cntCode},
+			#{cntName},
+			#{cntType},
+			#{cntPrice},
+			#{cntAmount},
+			#{cntQuality},
+			#{cntAdmin},
+			#{cntSignTime},
+			#{cntTerm},
+			#{cntPerfomPlace},
+			#{cntPerfomMode},
+			#{cntStandard},
+			#{cntBreach},
+			#{cntMethod},
+			#{cntReserve1},
+			#{cntReserve2},
+			#{cntReserve3},
+			#{cntReserve4},
+			#{cntReserve5},
+			#{sqr},
+			#{sex},
+			#{sfz},
+			#{dw},
+			#{zw},
+			#{gw},
+			#{sdate},
+			#{qdate},
+			#{bh},
+			#{cn},
+			#{site},
+			#{add},
+			#{phone},
+			#{sl},
+			#{jrsl}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.contact.domain.TbContactInfoDO">
+		update tb_contact_info
+		<set>
+			<if test="procInsId != null">PROC_INS_ID = #{procInsId}, </if>
+			<if test="cntCode != null">CNT_CODE = #{cntCode}, </if>
+			<if test="cntName != null">CNT_NAME = #{cntName}, </if>
+			<if test="cntType != null">CNT_TYPE = #{cntType}, </if>
+			<if test="cntPrice != null">CNT_PRICE = #{cntPrice}, </if>
+			<if test="cntAmount != null">CNT_AMOUNT = #{cntAmount}, </if>
+			<if test="cntQuality != null">CNT_QUALITY = #{cntQuality}, </if>
+			<if test="cntAdmin != null">CNT_ADMIN = #{cntAdmin}, </if>
+			<if test="cntSignTime != null">CNT_SIGN_TIME = #{cntSignTime}, </if>
+			<if test="cntTerm != null">CNT_TERM = #{cntTerm}, </if>
+			<if test="cntPerfomPlace != null">CNT_PERFOM_PLACE = #{cntPerfomPlace}, </if>
+			<if test="cntPerfomMode != null">CNT_PERFOM_MODE = #{cntPerfomMode}, </if>
+			<if test="cntStandard != null">CNT_STANDARD = #{cntStandard}, </if>
+			<if test="cntBreach != null">CNT_BREACH = #{cntBreach}, </if>
+			<if test="cntMethod != null">CNT_METHOD = #{cntMethod}, </if>
+			<if test="cntReserve1 != null">CNT_RESERVE1 = #{cntReserve1}, </if>
+			<if test="cntReserve2 != null">CNT_RESERVE2 = #{cntReserve2}, </if>
+			<if test="cntReserve3 != null">CNT_RESERVE3 = #{cntReserve3}, </if>
+			<if test="cntReserve4 != null">CNT_RESERVE4 = #{cntReserve4}, </if>
+			<if test="cntReserve5 != null">CNT_RESERVE5 = #{cntReserve5},</if>
+			<if test="sqr != null">sqr = #{sqr}, </if>
+			<if test="sex != null">sex = #{sex}, </if>
+			<if test="sfz != null">sfz = #{sfz}, </if>
+			<if test="dw != null">dw = #{dw}, </if>
+			<if test="zw != null">zw = #{zw}, </if>
+			<if test="gw != null">gw = #{gw}, </if>
+			<if test="sdate != null">sdate = #{sdate}, </if>
+			<if test="qdate != null">qdate = #{qdate}, </if>
+			<if test="bh != null">bh = #{bh}, </if>
+			<if test="cn != null">cn = #{cn}, </if>
+			<if test="site != null">site = #{site}, </if>
+			<if test="add != null">add = #{add}, </if>
+			<if test="phone != null">phone = #{phone}, </if>
+			<if test="sl != null">sl = #{sl}, </if>
+			<if test="jrsl != null">jrsl = #{jrsl}</if>
+		</set>
+		where CNT_ID = #{cntId}
+	</update>
+
+	<delete id="remove">
+		delete from tb_contact_info where CNT_ID = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from tb_contact_info where CNT_ID in
+		<foreach item="cntId" collection="array" open="(" separator="," close=")">
+			#{cntId}
+		</foreach>
+	</delete>
+
+</mapper>

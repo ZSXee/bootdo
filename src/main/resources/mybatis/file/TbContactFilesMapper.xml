@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.file.dao.TbContactFilesDao">
+
+	<select id="get" resultType="com.bootdo.file.domain.TbContactFilesDO">
+		select ID,CNT_ID,PATH,NAME,TYPE,RESERVE1,RESERVE2,RESERVE3 from tb_contact_files where ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.file.domain.TbContactFilesDO">
+		select ID,CNT_ID,PATH,NAME,TYPE,RESERVE1,RESERVE2,RESERVE3 from tb_contact_files
+        <where>  
+		  		  <if test="id != null and id != ''"> and ID = #{id} </if>
+		  		  <if test="cntId != null and cntId != ''"> and CNT_ID = #{cntId} </if>
+		  		  <if test="path != null and path != ''"> and PATH = #{path} </if>
+		  		  <if test="name != null and name != ''"> and NAME = #{name} </if>
+		  		  <if test="type != null and type != ''"> and TYPE = #{type} </if>
+		  		  <if test="reserve1 != null and reserve1 != ''"> and RESERVE1 = #{reserve1} </if>
+		  		  <if test="reserve2 != null and reserve2 != ''"> and RESERVE2 = #{reserve2} </if>
+		  		  <if test="reserve3 != null and reserve3 != ''"> and RESERVE3 = #{reserve3} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_contact_files
+		 <where>  
+		  		  <if test="id != null and id != ''"> and ID = #{id} </if>
+		  		  <if test="cntId != null and cntId != ''"> and CNT_ID = #{cntId} </if>
+		  		  <if test="path != null and path != ''"> and PATH = #{path} </if>
+		  		  <if test="name != null and name != ''"> and NAME = #{name} </if>
+		  		  <if test="type != null and type != ''"> and TYPE = #{type} </if>
+		  		  <if test="reserve1 != null and reserve1 != ''"> and RESERVE1 = #{reserve1} </if>
+		  		  <if test="reserve2 != null and reserve2 != ''"> and RESERVE2 = #{reserve2} </if>
+		  		  <if test="reserve3 != null and reserve3 != ''"> and RESERVE3 = #{reserve3} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.file.domain.TbContactFilesDO">
+		insert into tb_contact_files
+		(
+			ID, 
+			CNT_ID, 
+			PATH, 
+			NAME, 
+			TYPE, 
+			RESERVE1, 
+			RESERVE2, 
+			RESERVE3
+		)
+		values
+		(
+			#{id}, 
+			#{cntId}, 
+			#{path}, 
+			#{name}, 
+			#{type}, 
+			#{reserve1}, 
+			#{reserve2}, 
+			#{reserve3}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.file.domain.TbContactFilesDO">
+		update tb_contact_files 
+		<set>
+			<if test="cntId != null">CNT_ID = #{cntId}, </if>
+			<if test="path != null">PATH = #{path}, </if>
+			<if test="name != null">NAME = #{name}, </if>
+			<if test="type != null">TYPE = #{type}, </if>
+			<if test="reserve1 != null">RESERVE1 = #{reserve1}, </if>
+			<if test="reserve2 != null">RESERVE2 = #{reserve2}, </if>
+			<if test="reserve3 != null">RESERVE3 = #{reserve3}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_contact_files where ID = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_contact_files where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

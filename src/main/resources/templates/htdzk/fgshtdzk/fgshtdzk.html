@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-right col-md-2">
+							<input id="searchName11" type="text" class="form-control" placeholder="争议情况">
+						</div>
+						<div class="columns pull-right col-md-2">
+							<input id="searchName10" type="text" class="form-control" placeholder="违约情况">
+						</div>
+						<div class="columns pull-right col-md-2">
+							<input id="searchName9" type="text" class="form-control" placeholder="履行期限">
+						</div>
+						<div class="columns pull-right col-md-2">
+							<input id="searchName8" type="text" class="form-control" placeholder="合同标的额">
+						</div>
+						<div class="columns pull-right col-md-2">
+							<input id="searchName7" type="text" class="form-control" placeholder="当事人名称">
+						</div>
+						<div class="columns pull-right col-md-2">
+							<input id="searchName6" type="text" class="form-control" placeholder="合同名称">
+						</div>
+						<div class="columns pull-right col-md-2">
+							<input id="searchName5" type="text" class="form-control" placeholder="合同编号">
+						</div>
+						 
+						<div class="columns pull-right col-md-2">
+							<input id="searchName4" type="text" class="form-control" placeholder="版本">
+						</div>
+						
+						<div class="columns pull-right col-md-2">
+							<input id="searchName3" type="text" class="form-control" placeholder="上传日期">
+						</div>
+						
+						<div class="columns pull-right col-md-2">
+							<input id="searchName2" type="text" class="form-control" placeholder="上传人员">
+						</div>
+						
+						<!-- <div class="columns pull-right col-md-2">
+							<input id="searchName1" type="text" class="form-control" placeholder="上传机构">
+						</div>-->
+						<div class="columns pull-rigte col-md-2">
+                            	<input id="searchName1" name="searchName1" class="hidden" type="text" placeholder="上传机构Id" readonly="readonly">
+                            	<input id="dept_name" type="text" class="form-control" placeholder="上传机构" onclick="openDept()" readonly="readonly">
+                            </div>
+                            
+						<div class="columns pull-right col-md-2">
+							<input id="searchName" type="text" class="form-control" placeholder="文件名称">
+						</div>
+						<div class="columns pull-right">
+							<button id=upload shiro:hasPermission="htdzk:fgshtdzk:add" type="button" class="btn  btn-primary">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="htdzk:fgshtdzk:batchRemove" type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true" class="table text-nowrap">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_download_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="htdzk:fgshtdzk:edit">
+			<script type="text/javascript">
+			   var s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="htdzk:fgshtdzk:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="htdzk:fgshtdzk:download">
+			<script type="text/javascript">
+				var s_download_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/htdzk/fgshtdzk/fgshtdzk.js"></script>
+</body>
+</html>

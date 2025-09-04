@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.ReProcdefDao">
+
+	<select id="get" resultType="com.bootdo.activiti.domain.ReProcdefDO">
+		select ID_,REV_,CATEGORY_,NAME_,KEY_,VERSION_,DEPLOYMENT_ID_,RESOURCE_NAME_,DGRM_RESOURCE_NAME_,DESCRIPTION_,HAS_START_FORM_KEY_,HAS_GRAPHICAL_NOTATION_,SUSPENSION_STATE_,TENANT_ID_ from act_re_procdef where ID_ = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.activiti.domain.ReProcdefDO">
+		select ID_,REV_,CATEGORY_,NAME_,KEY_,VERSION_,DEPLOYMENT_ID_,RESOURCE_NAME_,DGRM_RESOURCE_NAME_,DESCRIPTION_,HAS_START_FORM_KEY_,HAS_GRAPHICAL_NOTATION_,SUSPENSION_STATE_,TENANT_ID_ from act_re_procdef
+        <where>  
+		  		  <if test="id != null and id != ''"> and ID_ = #{id} </if>
+		  		  <if test="rev != null and rev != ''"> and REV_ = #{rev} </if>
+		  		  <if test="category != null and category != ''"> and CATEGORY_ = #{category} </if>
+		  		  <if test="name != null and name != ''"> and NAME_ = #{name} </if>
+		  		  <if test="key != null and key != ''"> and KEY_ = #{key} </if>
+		  		  <if test="version != null and version != ''"> and VERSION_ = #{version} </if>
+		  		  <if test="deploymentId != null and deploymentId != ''"> and DEPLOYMENT_ID_ = #{deploymentId} </if>
+		  		  <if test="resourceName != null and resourceName != ''"> and RESOURCE_NAME_ = #{resourceName} </if>
+		  		  <if test="dgrmResourceName != null and dgrmResourceName != ''"> and DGRM_RESOURCE_NAME_ = #{dgrmResourceName} </if>
+		  		  <if test="description != null and description != ''"> and DESCRIPTION_ = #{description} </if>
+		  		  <if test="hasStartFormKey != null and hasStartFormKey != ''"> and HAS_START_FORM_KEY_ = #{hasStartFormKey} </if>
+		  		  <if test="hasGraphicalNotation != null and hasGraphicalNotation != ''"> and HAS_GRAPHICAL_NOTATION_ = #{hasGraphicalNotation} </if>
+		  		  <if test="suspensionState != null and suspensionState != ''"> and SUSPENSION_STATE_ = #{suspensionState} </if>
+		  		  <if test="tenantId != null and tenantId != ''"> and TENANT_ID_ = #{tenantId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by ID_ desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="listNew" resultType="com.bootdo.activiti.domain.ReProcdefDO">
+		select ID_,REV_,CATEGORY_,NAME_,a.KEY_,a.VERSION_,DEPLOYMENT_ID_,RESOURCE_NAME_,DGRM_RESOURCE_NAME_,DESCRIPTION_,HAS_START_FORM_KEY_,HAS_GRAPHICAL_NOTATION_,SUSPENSION_STATE_,TENANT_ID_ from act_re_procdef a ,
+        (select KEY_,max(version_) version_ from act_re_procdef group by KEY_) b
+        where a.KEY_=b.KEY_ and a.version_= b.version_
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from act_re_procdef
+		 <where>  
+		  		  <if test="id != null and id != ''"> and ID_ = #{id} </if>
+		  		  <if test="rev != null and rev != ''"> and REV_ = #{rev} </if>
+		  		  <if test="category != null and category != ''"> and CATEGORY_ = #{category} </if>
+		  		  <if test="name != null and name != ''"> and NAME_ = #{name} </if>
+		  		  <if test="key != null and key != ''"> and KEY_ = #{key} </if>
+		  		  <if test="version != null and version != ''"> and VERSION_ = #{version} </if>
+		  		  <if test="deploymentId != null and deploymentId != ''"> and DEPLOYMENT_ID_ = #{deploymentId} </if>
+		  		  <if test="resourceName != null and resourceName != ''"> and RESOURCE_NAME_ = #{resourceName} </if>
+		  		  <if test="dgrmResourceName != null and dgrmResourceName != ''"> and DGRM_RESOURCE_NAME_ = #{dgrmResourceName} </if>
+		  		  <if test="description != null and description != ''"> and DESCRIPTION_ = #{description} </if>
+		  		  <if test="hasStartFormKey != null and hasStartFormKey != ''"> and HAS_START_FORM_KEY_ = #{hasStartFormKey} </if>
+		  		  <if test="hasGraphicalNotation != null and hasGraphicalNotation != ''"> and HAS_GRAPHICAL_NOTATION_ = #{hasGraphicalNotation} </if>
+		  		  <if test="suspensionState != null and suspensionState != ''"> and SUSPENSION_STATE_ = #{suspensionState} </if>
+		  		  <if test="tenantId != null and tenantId != ''"> and TENANT_ID_ = #{tenantId} </if>
+		  		</where>
+	</select>
+
+</mapper>

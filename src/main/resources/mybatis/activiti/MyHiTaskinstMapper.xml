@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.MyHiTaskinstDao">
+
+	<select id="list" resultType="com.bootdo.activiti.domain.MyHiTaskinstDO">
+		select t.ID_,t.PROC_INST_ID_,b.NAME_ as processDefinitionName,t.NAME_ as contactName,b.KEY_ AS processDefinitionId,c.name as startUser,t.START_TIME_,t.END_TIME_,d.name as cntAdminDep,f.name  AS assignee
+		FROM act_hi_procinst t
+		LEFT JOIN act_re_procdef b ON t.PROC_DEF_ID_ = b.ID_
+		LEFT JOIN sys_user c ON t.START_USER_ID_ = c.username
+		LEFT JOIN sys_dept d ON c.dept_id = d.dept_id
+		LEFT JOIN act_ru_task e ON e.PROC_INST_ID_ = t.PROC_INST_ID_
+		LEFT JOIN sys_user f ON e.ASSIGNEE_ = f.username
+        <where>
+		  		  <if test="id != null and id != ''"> and t.ID_ = #{id} </if>
+		  		  <if test="procInstId != null and procInstId != ''"> and t.PROC_INST_ID_ = #{procInstId} </if>
+		  		  <if test="processDefinitionName != null and processDefinitionName != ''"> and b.NAME_ LIKE '%'||#{processDefinitionName}||'%' </if>
+		  		  <if test="contactName != null and contactName != ''"> and t.NAME_ LIKE '%'||#{contactName}||'%' </if>
+		  		  <if test="startUser != null and startUser != ''"> and t.START_USER_ID_ = #{startUser} </if>
+		  		  <if test="startTime != null and startTime != ''"> and t.START_TIME_ &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and t.END_TIME_ &lt;= #{endTime} </if>
+		  		  <if test="cntAdminDep != null and cntAdminDep != ''"> and d.name LIKE ||'%',#{cntAdminDep}||'%' </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by ID_ desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*)
+		FROM act_hi_procinst t
+		LEFT JOIN act_re_procdef b ON t.PROC_DEF_ID_ = b.ID_
+		LEFT JOIN sys_user c ON t.START_USER_ID_ = c.username
+		LEFT JOIN sys_dept d ON c.dept_id = d.dept_id
+        <where>
+		  		  <if test="id != null and id != ''"> and t.ID_ = #{id} </if>
+		  		  <if test="procInstId != null and procInstId != ''"> and t.PROC_INST_ID_ = #{procInstId} </if>
+		  		  <if test="processDefinitionName != null and processDefinitionName != ''"> and b.NAME_ LIKE ||'%'||#{processDefinitionName||'%' </if>
+		  		  <if test="startUser != null and startUser != ''"> and c.name LIKE CONCAT('%',#{startUser},'%') </if>
+		  		  <if test="startTime != null and startTime != ''"> and t.START_TIME_ &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and t.END_TIME_ &lt;= #{endTime} </if>
+		  		  <if test="cntAdminDep != null and cntAdminDep != ''"> and d.name LIKE ||'%'||#{cntAdminDep}||'%' </if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-20">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div id="exampleToolbar" role="group">
+					<form id="myForm">
+						<div class="form-group">
+                            <div class="col-md-2">
+                                <input id="startTime" name="startTime" class="form-control" type="text" placeholder="开始时间">
+                            </div>
+                            <div class="col-md-2">
+                                <input id="endTime" name="endTime" class="form-control" type="text" placeholder="结束时间">
+                            </div>
+                            <div class="col-md-2">
+                                <input id="name" name="name" class="form-control" type="text" placeholder="合同名称">
+                            </div>
+                            <div class="col-md-2">
+                                <input id="startUserId" name="startUserId" class="form-control" type="text" placeholder="发起人工号">
+                            </div>
+                            <div class="col-md-2">
+                            	<input id="dept_id" name="dept_id" class="hidden" type="text" placeholder="发起机构Id" readonly="readonly">
+                                <input id="dept_name" name="dept_name" class="form-control" type="text" placeholder="发起机构" onclick="openDept()" readonly="readonly">
+                            </div>
+							<div class="col-md-2">
+								<select name="cntType" id="cntType" class="form-control chosen-select">
+									<option value="">--合同类型--</option>
+									<option th:each="type1:${cntTypes}" th:value="${type1.value}" th:text="${type1.name}"></option>
+								</select>
+							</div>
+						</div>
+					</form>
+                        <div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+							<button class="btn btn-primary" onclick="export_action()">导出</button>
+							<button class="btn btn-primary" onclick="reset()">重置</button>
+							<button shiro:hasPermission="contact:hiProcinst:listAll" type="button" class="btn  btn-danger"
+								onclick="listAll()">
+								<i class="fa fa-trash" aria-hidden="true"></i>查询全部
+							</button>
+							<button shiro:hasPermission="contact:hiProcinst:exportAll" type="button" class="btn  btn-success"
+								onclick="exportAll()">
+								<i class="fa fa-trash" aria-hidden="true"></i>导出全部
+							</button>
+                        </div>
+	                </div>
+					<table id="exampleTable" data-mobile-responsive="true"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/contact/hiProcinst/hiProcinst.js"></script>
+</body>
+</html>

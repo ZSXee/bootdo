@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.GreylistInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.GreylistInfoDO">
+		select number,area,officename,address,phone from act_greylist_info where number = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.GreylistInfoDO">
+		select number,area,officename,address,phone from act_greylist_info
+        <where>  
+		  		  <if test="number != null and number != ''"> and number = #{number} </if>
+		  		  <if test="area != null and area != ''"> and area = #{area} </if>
+		  		  <if test="officename != null and officename != ''"> and officename = #{officename} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="phone != null and phone != ''">and phone =#{phone} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by number 
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from act_greylist_info
+		 <where>  
+		  		  <if test="number != null and number != ''"> and number = #{number} </if>
+		  		  <if test="area != null and area != ''"> and area = #{area} </if>
+		  		  <if test="officename != null and officename != ''"> and officename = #{officename} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="phone != null and phone != ''">and phone =#{phone}</if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.GreylistInfoDO">
+		insert into act_greylist_info
+		(
+			number, 
+			area, 
+			officename, 
+			address,
+			phone
+		)
+		values
+		(
+			#{number}, 
+			#{area}, 
+			#{officename}, 
+			#{address},
+			#{phone}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.GreylistInfoDO">
+		update act_greylist_info 
+		<set>
+			<if test="area != null">area = #{area}, </if>
+			<if test="officename != null">officename = #{officename}, </if>
+			<if test="address != null">address = #{address},</if>
+			<if test="phone !=null">phone = #{phone}</if>
+		</set>
+		where number = #{number}
+	</update>
+	
+	<delete id="remove">
+		delete from act_greylist_info where number = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from act_greylist_info where number in 
+		<foreach item="number" collection="array" open="(" separator="," close=")">
+			#{number}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="key" name="key" class="hidden" type="text" th:value="${key}">
+							<input id="aidId" name="aidId" class="hidden" type="text" th:value="${aidId}">
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">名称：</label>
+								<div class="col-sm-8">
+									<input class="form-control" type="text" value="莱商银行-法律协助" required>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">申请事项：</label>
+								<div class="col-sm-8">
+									<textarea id="aidType" name="aidType" class="form-control" rows="3" required></textarea>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">申请理由：</label>
+								<div class="col-sm-8">
+									<textarea id="aidContent" name="aidContent" class="form-control" rows="3" required></textarea>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">资料上传：</label>
+								<div class="col-sm-8">
+									<button type="button" class="layui-btn" id="test1">
+ 										<i class="fa fa-cloud"></i>上传文件
+                        			</button>
+									<table id="filelist_add" data-mobile-responsive="true"></table>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/legalAid/legalAid/add.js"></script>
+	<script type="text/javascript" src="/js/appjs/legalAid/legalAid/filelist_add.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.GslawyerInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.GslawyerInfoDO">
+		select number,name,sex,age,phone from act_gslawyer_info where number = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.GslawyerInfoDO">
+		select number,name,sex,age,phone from act_gslawyer_info
+        <where>  
+		  		  <if test="number != null and number != ''"> and number = #{number} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by number 
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from act_gslawyer_info
+		 <where>  
+		  		  <if test="number != null and number != ''"> and number = #{number} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.GslawyerInfoDO">
+		insert into act_gslawyer_info
+		(
+			number, 
+			name, 
+			sex, 
+			age, 
+			phone
+		)
+		values
+		(
+			#{number}, 
+			#{name}, 
+			#{sex}, 
+			#{age}, 
+			#{phone}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.GslawyerInfoDO">
+		update act_gslawyer_info 
+		<set>
+			<if test="name != null">name = #{name}, </if>
+			<if test="sex != null">sex = #{sex}, </if>
+			<if test="age != null">age = #{age}, </if>
+			<if test="phone != null">phone = #{phone}</if>
+		</set>
+		where number = #{number}
+	</update>
+	
+	<delete id="remove">
+		delete from act_gslawyer_info where number = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from act_gslawyer_info where number in 
+		<foreach item="number" collection="array" open="(" separator="," close=")">
+			#{number}
+		</foreach>
+	</delete>
+
+</mapper>

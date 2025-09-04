@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.contact.dao.HiProcinstDao">
+
+	<select id="get" resultType="com.bootdo.contact.domain.HiProcinstDO">
+		select ID_,PROC_INST_ID_,BUSINESS_KEY_,PROC_DEF_ID_,START_TIME_,END_TIME_,DURATION_,START_USER_ID_,START_ACT_ID_,END_ACT_ID_,SUPER_PROCESS_INSTANCE_ID_,DELETE_REASON_,TENANT_ID_,NAME_ from act_hi_procinst where ID_ = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.contact.domain.HiProcinstDO">
+		SELECT *,f.NAME_ AS task_name from (
+		select a.ID_,a.PROC_INST_ID_,a.BUSINESS_KEY_,a.PROC_DEF_ID_,a.START_TIME_,a.END_TIME_,a.DURATION_,a.START_USER_ID_,a.START_ACT_ID_,a.END_ACT_ID_,a.SUPER_PROCESS_INSTANCE_ID_,a.DELETE_REASON_,a.TENANT_ID_ as contactName,a.NAME_,b.dept_id,b.name as user_name,c.cnt_type,c.cnt_standard,c.cnt_reserve3,e.reserve1,d.name as dept_name
+		<!-- from act_hi_procinst a, sys_user b, tb_contact_info c, sys_dept d, sys_dept_extend e -->
+		from ACT_HI_PROCINST a, sys_user b, tb_contact_info c, sys_dept d, sys_dept_extend e
+        <where>
+				  <if test="1==1"> and b.username = a.START_USER_ID_ and a.BUSINESS_KEY_=c.cnt_id</if>
+				  <if test="1==1"> and b.dept_id = d.dept_id and d.dept_id = e.DEPT_ID_E</if>
+		  		  <if test="cntType != null and cntType != ''"> and c.cnt_type = #{cntType} </if>
+		  		  <if test="reserve1 != null and reserve1 != ''"> and e.reserve1 = #{reserve1} </if>
+		  		  <if test="name != null and name != ''"> and NAME_ LIKE '%'||#{name}||'%'  </if>
+		  		  <if test="procInstId != null and procInstId != ''"> and PROC_INST_ID_ = #{procInstId} </if>
+		  		  <if test="businessKey != null and businessKey != ''"> and BUSINESS_KEY_ = #{businessKey} </if>
+		  		  <if test="procDefId != null and procDefId != ''"> and PROC_DEF_ID_ = #{procDefId} </if>
+		  		  <if test="startTime != null and startTime != ''"> and <![CDATA[ START_TIME_ >= #{startTime,jdbcType=DATE}  ]]> </if>
+		  		  <if test="endTime != null and endTime != ''"> and <![CDATA[ END_TIME_ <= #{endTime,jdbcType=DATE}  ]]> </if>
+		  		  <if test="duration != null and duration != ''"> and DURATION_ = #{duration} </if>
+		  		  <if test="startUserId != null and startUserId != ''"> and START_USER_ID_ = #{startUserId} </if>
+		  		  <if test="startActId != null and startActId != ''"> and START_ACT_ID_ = #{startActId} </if>
+		  		  <if test="endActId != null and endActId != ''"> and END_ACT_ID_ = #{endActId} </if>
+		  		  <if test="superProcessInstanceId != null and superProcessInstanceId != ''"> and SUPER_PROCESS_INSTANCE_ID_ = #{superProcessInstanceId} </if>
+		  		  <if test="deleteReason != null and deleteReason != ''"> and DELETE_REASON_ = #{deleteReason} </if>
+		  		  <if test="tenantId != null and tenantId != ''"> and TENANT_ID_ = #{tenantId} </if>
+		  		  <if test="dept_name != null and dept_name != ''"> and d.name = #{dept_name} </if>
+		  		  <if test="deptIds != null and deptIds != ''"> and b.dept_id IN
+					<foreach item="item" collection="deptIds" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+		  		  </if>
+		</where>
+		) t
+		<!-- LEFT JOIN act_ru_task f ON t.PROC_INST_ID_ = f.PROC_INST_ID_  -->
+		LEFT JOIN ACT_RU_TASK f ON t.PROC_INST_ID_ = f.PROC_INST_ID_
+		ORDER BY
+			t.START_TIME_ DESC
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		SELECT count(*) from (
+		select a.ID_,a.PROC_INST_ID_,a.BUSINESS_KEY_,a.PROC_DEF_ID_,a.START_TIME_,a.END_TIME_,a.DURATION_,a.START_USER_ID_,a.START_ACT_ID_,a.END_ACT_ID_,a.SUPER_PROCESS_INSTANCE_ID_,a.DELETE_REASON_,a.TENANT_ID_,a.NAME_,b.dept_id,b.name as user_name,c.cnt_type,c.cnt_standard,e.reserve1,d.name as dept_name
+		from act_hi_procinst a, sys_user b, tb_contact_info c, sys_dept d, sys_dept_extend e
+        <where>
+				  <if test="1==1"> and b.username = a.START_USER_ID_ and a.BUSINESS_KEY_=c.cnt_id</if>
+				  <if test="1==1"> and b.dept_id = d.dept_id and d.dept_id = e.DEPT_ID_E</if>
+		  		  <if test="cntType != null and cntType != ''"> and c.cnt_type = #{cntType} </if>
+		  		  <if test="reserve1 != null and reserve1 != ''"> and e.reserve1 = #{reserve1} </if>
+		  		  <if test="name != null and name != ''"> and NAME_ LIKE '%'||#{name}||'%'  </if>
+		  		  <if test="procInstId != null and procInstId != ''"> and PROC_INST_ID_ = #{procInstId} </if>
+		  		  <if test="businessKey != null and businessKey != ''"> and BUSINESS_KEY_ = #{businessKey} </if>
+		  		  <if test="procDefId != null and procDefId != ''"> and PROC_DEF_ID_ = #{procDefId} </if>
+		  		  <if test="startTime != null and startTime != ''"> and <![CDATA[ START_TIME_ >= #{startTime,jdbcType=DATE}  ]]> </if>
+		  		  <if test="endTime != null and endTime != ''"> and <![CDATA[ END_TIME_ <= #{endTime,jdbcType=DATE}  ]]> </if>
+		  		  <if test="duration != null and duration != ''"> and DURATION_ = #{duration} </if>
+		  		  <if test="startUserId != null and startUserId != ''"> and START_USER_ID_ = #{startUserId} </if>
+		  		  <if test="startActId != null and startActId != ''"> and START_ACT_ID_ = #{startActId} </if>
+		  		  <if test="endActId != null and endActId != ''"> and END_ACT_ID_ = #{endActId} </if>
+		  		  <if test="superProcessInstanceId != null and superProcessInstanceId != ''"> and SUPER_PROCESS_INSTANCE_ID_ = #{superProcessInstanceId} </if>
+		  		  <if test="deleteReason != null and deleteReason != ''"> and DELETE_REASON_ = #{deleteReason} </if>
+		  		  <if test="tenantId != null and tenantId != ''"> and TENANT_ID_ = #{tenantId} </if>
+		  		  <if test="dept_name != null and dept_name != ''"> and d.name = #{dept_name} </if>
+		  		  <if test="deptIds != null and deptIds != ''"> and b.dept_id IN
+					<foreach item="item" collection="deptIds" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+		  		  </if>
+		</where>
+		) t
+	</select>
+
+</mapper>

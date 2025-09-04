@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="comment">
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">批注：</label>
+	                            <div class="col-sm-8">
+	                                <textarea maxlength="500" id="taskComment" name="taskComment" class="form-control" required></textarea>
+	                            </div>
+	                        </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/contact/tbContactInfo/comment_scan.js"></script>
+	</script>
+</body>
+</html>

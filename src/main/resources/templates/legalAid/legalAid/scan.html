@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="aidId" name="aidId" th:value="${legalAid.aidId}"  type="hidden">
+							<input id="taskId" name="taskId" th:value="${legalAid.taskId}" type="hidden">
+							<input id="procInsId" name="procInsId" th:value="${legalAid.procInsId}" type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">申请事项：</label>
+								<div class="col-sm-8">
+									<textarea id="aidType" name="aidType" class="form-control" rows="3" readonly="readonly">[[${legalAid.aidType}]]</textarea>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">申请理由：</label>
+								<div class="col-sm-8">
+									<textarea id="aidContent" name="aidContent" class="form-control" rows="3" readonly="readonly">[[${legalAid.aidContent}]]</textarea>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">附件：</label>
+								<div class="col-sm-8">
+									<table id="filelist_edit" data-mobile-responsive="true"></table>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">历史批注：</label>
+								<div class="col-sm-8">
+									<table id="comments" data-mobile-responsive="true"></table>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/legalAid/legalAid/edit.js"></script>
+	<script type="text/javascript" src="/js/appjs/legalAid/legalAid/filelist_edit.js"></script>
+	<script type="text/javascript" src="/js/appjs/legalAid/legalAid/comments.js"></script>
+</body>
+</html>

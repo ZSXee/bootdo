@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.lawpclass.dao.LawsRegulationsDao">
+
+	<select id="get" resultType="com.bootdo.lawpclass.domain.LawsRegulationsDO">
+		select ID,PATH,NAME,TYPE,UPLOADER,RESERVE1,RESERVE2,RESERVE3,RESERVE4,RESERVE5 from tb_lawsregulations where ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.lawpclass.domain.LawsRegulationsDO">
+		select ID,PATH,NAME,TYPE,UPLOADER,RESERVE1,RESERVE2,RESERVE3,RESERVE4,RESERVE5 from tb_lawsregulations
+        <where>
+		  		  <if test="id != null and id != ''"> and ID = #{id} </if>
+		  		  <if test="path != null and path != ''"> and PATH = #{path} </if>
+		  		  <if test="name != null and name != ''"> and NAME LIKE '%'||#{name}||'%'  </if>
+		  		  <if test="type != null and type != ''"> and TYPE = #{type} </if>
+		  		  <if test="uploader != null and uploader != ''"> and UPLOADER LIKE '%'||#{uploader}||'%' </if>
+		  		  <if test="reserve1 != null and reserve1 != ''"> and RESERVE1 LIKE '%'||#{reserve1}||'%' </if>
+		  		  <if test="reserve2 != null and reserve2 != ''"> and RESERVE2 LIKE '%'||#{reserve2}||'%' </if>
+		  		  <if test="reserve3 != null and reserve3 != ''"> and RESERVE3 LIKE '%'||#{reserve3}||'%' </if>
+		  		  <if test="reserve4 != null and reserve4 != ''"> and RESERVE4 LIKE '%'||#{reserve4}||'%' </if>
+		  		  <if test="reserve5 != null and reserve5 != ''"> and RESERVE5 LIKE '%'||#{reserve5}||'%' </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by RESERVE2 desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from tb_lawsregulations
+		 <where>
+		  		  <if test="id != null and id != ''"> and ID = #{id} </if>
+		  		  <if test="path != null and path != ''"> and PATH = #{path} </if>
+		  		  <if test="name != null and name != ''"> and NAME = #{name} </if>
+		  		  <if test="type != null and type != ''"> and TYPE = #{type} </if>
+		  		  <if test="uploader != null and uploader != ''"> and UPLOADER = #{uploader} </if>
+		  		  <if test="reserve1 != null and reserve1 != ''"> and RESERVE1 = #{reserve1} </if>
+		  		  <if test="reserve2 != null and reserve2 != ''"> and RESERVE2 = #{reserve2} </if>
+		  		  <if test="reserve3 != null and reserve3 != ''"> and RESERVE3 = #{reserve3} </if>
+		  		  <if test="reserve4 != null and reserve4 != ''"> and RESERVE4 = #{reserve4} </if>
+		  		  <if test="reserve5 != null and reserve5 != ''"> and RESERVE5 = #{reserve5} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.lawpclass.domain.LawsRegulationsDO">
+		insert into tb_lawsregulations
+		(
+			ID,
+			PATH,
+			NAME,
+			TYPE,
+			UPLOADER,
+			RESERVE1,
+			RESERVE2,
+			RESERVE3,
+			RESERVE4,
+			RESERVE5
+		)
+		values
+		(
+			#{id},
+			#{path},
+			#{name},
+			#{type},
+			#{uploader},
+			#{reserve1},
+			#{reserve2},
+			#{reserve3},
+			#{reserve4},
+			#{reserve5}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.lawpclass.domain.LawsRegulationsDO">
+		update tb_lawsregulations
+		<set>
+			<if test="path != null">PATH = #{path}, </if>
+			<if test="name != null">NAME = #{name}, </if>
+			<if test="type != null">TYPE = #{type}, </if>
+			<if test="uploader != null">UPLOADER = #{uploader}, </if>
+			<if test="reserve1 != null">RESERVE1 = #{reserve1}, </if>
+			<if test="reserve2 != null">RESERVE2 = #{reserve2}, </if>
+			<if test="reserve3 != null">RESERVE3 = #{reserve3}, </if>
+			<if test="reserve4 != null">RESERVE4 = #{reserve4}, </if>
+			<if test="reserve5 != null">RESERVE5 = #{reserve5}</if>
+
+		</set>
+		where ID = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from tb_lawsregulations where ID = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from tb_lawsregulations where ID in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,149 @@
+package com.bootdo.system.controller;
+
+import com.bootdo.common.annotation.Log;
+import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.domain.FileDO;
+import com.bootdo.common.domain.Tree;
+import com.bootdo.common.service.FileService;
+import com.bootdo.common.utils.MD5Utils;
+import com.bootdo.common.utils.R;
+import com.bootdo.common.utils.ShiroUtils;
+import com.bootdo.system.domain.MenuDO;
+import com.bootdo.system.service.MenuService;
+import com.lsbankchina.webservice.Info;
+import com.lsbankchina.webservice.WsClient;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+@Controller
+public class LoginController extends BaseController {
+
+	@Autowired
+	MenuService menuService;
+	@Autowired
+	FileService fileService;
+	@GetMapping({ "/", "" })
+	String welcome(Model model) {
+		return "redirect:/login";
+	}
+
+	@Log("请求访问主页")
+	@GetMapping({ "/index" })
+	String index(Model model) {
+		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
+		model.addAttribute("menus", menus);
+		model.addAttribute("name", getUser().getName());
+		FileDO fileDO = fileService.get(getUser().getPicId());
+		if(fileDO!=null&&fileDO.getUrl()!=null){
+			if(fileService.isExist(fileDO.getUrl())){
+				model.addAttribute("picUrl",fileDO.getUrl());
+			}else {
+				model.addAttribute("picUrl","/img/photo_s.jpg");
+			}
+		}else {
+			model.addAttribute("picUrl","/img/photo_s.jpg");
+		}
+		model.addAttribute("username", getUser().getUsername());
+		return "index_v1";
+	}
+
+	@GetMapping("/login")
+	String login() {
+		return "login";
+	}
+
+	@GetMapping("/contact/user/pagelogin")
+	String login_old() {
+		return "login";
+	}
+	
+	@Log("登录")
+	@PostMapping("/login")
+	@ResponseBody
+	R ajaxLogin(String username, String password) {
+
+		password = MD5Utils.encrypt(username, password);
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			subject.login(token);
+			return R.ok();
+		} catch (AuthenticationException e) {
+			return R.error(e.getMessage());
+		}
+	}
+
+	@Log("单点登录")
+	@GetMapping("/LS_SSO_Logon")
+	String sso_Login(@RequestParam Map<String, Object> params, HttpServletRequest request) throws MalformedURLException {
+		
+		String sUserID = (String)params.get("accn");
+		String sToken = (String)params.get("token");
+		String ipaddr = request.getRemoteAddr();
+		URL wsdlUrl = new URL("http://10.4.3.25/ws/authcenter.wsdl");
+//		URL wsdlUrl = new URL("http://216.16.16.30/ws/authcenter.wsdl");
+		String sysid = "fgsht";
+		//登录成功，还需进一步进行密码验证
+		try {
+			// 同步密钥=========================oa，接入系统都需要
+			Info info = WsClient.syncSysCode(wsdlUrl, sysid);
+			if (info.getState() == 0) {
+				System.out.println(info.getSyscodekey());
+			} else {
+				System.out.println(info.getMessage());
+			}
+			// 登录认证==========================接入系统使用
+			Info info1 = WsClient.loginAuth(wsdlUrl, sUserID, ipaddr, info.getSyscodekey(), sToken);
+			if (info1.getState() == 0) {
+				System.out.println("验证成功");
+				UsernamePasswordToken token = new UsernamePasswordToken(sUserID, "9999");
+				Subject subject = SecurityUtils.getSubject();
+				try {
+					subject.login(token);
+				} catch (AuthenticationException e) {
+					System.out.println(e.getMessage());
+					return "redirect:/login_sso";
+				}
+				return "redirect:/index";
+			} else {
+				System.out.println(info1.getMessage());
+				return "redirect:/login_sso";
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			return "redirect:/login_sso";
+		}
+    }
+
+	@GetMapping("/login_sso")
+	String login_sso() {
+		return "login_sso";
+	}
+	
+	@GetMapping("/logout")
+	String logout() {
+		ShiroUtils.logout();
+		return "redirect:/login";
+	}
+
+	@GetMapping("/main")
+	String main() {
+		return "main";
+	}
+
+}

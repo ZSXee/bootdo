@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="comment">
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">1、本合同是否已阅知？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="yuedu" id="yuedu" value="option1" checked>是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="yuedu" id="yuedu" value="option2">否</label>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">2、本合同所涉及业务是否合规？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="hegui" id="hegui" value="option1" checked>是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="hegui" id="hegui" value="option2">否</label>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">3、对本合同涉及业务条款是否有异议？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="yiyi" id="yiyi" value="option1">是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="yiyi" id="yiyi" value="option2" checked>否</label>
+								</div>
+	                        </div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">4、是否同意提交法律审核？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="shenhe" id="shenhe" value="option1" checked>是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="shenhe" id="shenhe" value="option2">否</label>
+								</div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">批注：</label>
+	                            <div class="col-sm-8">
+	                                <textarea maxlength="500" id="taskComment" name="taskComment" class="form-control" required>同意。</textarea>
+	                            </div>
+	                        </div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">确认</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/contact/officeInfo/comment.js"></script>
+	</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="cntId" name="cntId" th:value="${tbContactInfo.cntId}"  type="hidden">
+						<input id="taskId" name="taskId" th:value="${tbContactInfo.taskId}" type="hidden">
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">流程实例ID：</label>
+	                            <div class="col-sm-4">
+	                                <input id="procInsId" name="procInsId" th:value="${tbContactInfo.procInsId}"
+	                                       class="form-control" type="text">
+	                            </div>
+								<label class="col-sm-2 control-label">合同编号：</label>
+								<div class="col-sm-4">
+									<input id="cntCode" name="cntCode" th:value="${tbContactInfo.cntCode}" class="form-control" type="text">
+								</div>
+	                        </div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">合同名称：</label>
+								<div class="col-sm-4">
+									<input id="cntName" name="cntName" th:value="${tbContactInfo.cntName}" class="form-control" type="text">
+								</div>
+								<label class="col-sm-2 control-label">合同类型：</label>
+								<div class="col-sm-4">
+									<select name="cntType" id="cntType" class="form-control chosen-select" required>
+										<option value="">--合同类型--</option>
+										<option th:each="type1:${cntTypes}" th:value="${type1.value}" th:text="${type1.name}" th:selected="${type1.remarks} ==checked"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">合同标的：</label>
+								<div class="col-sm-4">
+									<input id="cntStandard" name="cntStandard" th:value="${tbContactInfo.cntStandard}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">业务背景说明：</label>
+								<div class="col-sm-8">
+									<textarea id="cntReserve5" name="cntReserve5" class="form-control" rows="3">[[${tbContactInfo.cntReserve5}]]</textarea>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">合同份数：</label>
+								<div class="col-sm-4">
+									<input id="cntReserve3" name="cntReserve3" th:value="${tbContactInfo.cntReserve3}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">合同附件：</label>
+								<div class="col-sm-8">
+									<table id="filelist_scan" data-mobile-responsive="true"></table>
+								</div>
+							</div>
+							<div class="form-group" id="comment_filelist_formgroup">
+								<label class="col-sm-2 control-label">批注附件：</label>
+								<div class="col-sm-8">
+									<button type="button" class="layui-btn" id="test3">
+										<i class="fa fa-cloud"></i>上传文件
+									</button>
+									<table id="comment_filelist" data-mobile-responsive="true"></table>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">历史批注：</label>
+								<div class="col-sm-8">
+									<table id="comments" data-mobile-responsive="true"></table>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">历史追加批注：</label>
+								<div class="col-sm-8">
+									<table id="addcomments" data-mobile-responsive="true"></table>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">追加批注：</label>
+								<div class="col-sm-8">
+									<textarea id="taskComment" name="taskComment" class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary" onclick="$('#taskPass').val('1')">追加批注
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/contact/tbContactInfo/edit_hgfzr.js"></script>
+	<script type="text/javascript" src="/js/appjs/contact/tbContactInfo/filelist_edit.js"></script>
+	<script type="text/javascript" src="/js/appjs/contact/tbContactInfo/filelist_scan.js"></script>
+	<script type="text/javascript" src="/js/appjs/contact/tbContactInfo/comment_filelist.js"></script>
+	<script type="text/javascript" src="/js/appjs/contact/tbContactInfo/comments.js"></script>
+	<script type="text/javascript" src="/js/appjs/contact/tbContactInfo/addcomments.js"></script>
+</body>
+</html>

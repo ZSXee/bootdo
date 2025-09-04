@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="comment">
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">1、本合同是否已阅知？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="yuedu" id="yuedu" value="1" checked>是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="yuedu" id="yuedu" value="0">否</label>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">2、本合同所涉及业务是否合规？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="hegui" id="hegui" value="1" checked>是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="hegui" id="hegui" value="0">否</label>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">3、对本合同涉及业务条款是否有异议？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="yiyi" id="yiyi" value="1">是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="yiyi" id="yiyi" value="0" checked>否</label>
+								</div>
+	                        </div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">4、是否同意提交法律审核？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="shenhe" id="shenhe" value="1" checked>是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="shenhe" id="shenhe" value="0">否</label>
+								</div>
+	                        </div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">5、本合同所涉及业务的履行情况？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="lvxing" id="lvxing" value="0" checked>未履行</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="lvxing" id="lvxing" value="1">履行中</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="lvxing" id="lvxing" value="2">履行完毕</label>
+								</div>
+	                        </div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">6、本合同所涉及业务是否正在履行过程中或已履行完毕（如是，应附书面履行情况说明）？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="yewu" id="yewu" value="1">是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="yewu" id="yewu" value="0" checked>否</label>
+								</div>
+	                        </div>
+							<div class="form-group">
+	                            <label class="col-sm-2 control-label">7、合同内容与实际业务是否相符？</label>
+								<div class="radio-inline">
+									<label><input type="radio" name="xiangfu" id="xiangfu" value="1" checked>是</label>
+								</div>
+								<div class="radio-inline">
+									<label><input type="radio" name="xiangfu" id="xiangfu" value="0">否</label>
+								</div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label class="col-sm-2 control-label">批注：</label>
+	                            <div class="col-sm-8">
+	                                <textarea maxlength="500" id="taskComment" name="taskComment" class="form-control" required>同意。</textarea>
+	                            </div>
+	                        </div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">确认</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/contact/officeInfo/comment.js"></script>
+	</script>
+</body>
+</html>

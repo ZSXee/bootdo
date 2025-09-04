@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.contact.dao.TbLaywerDao">
+
+	<select id="get" resultType="com.bootdo.contact.domain.TbLaywerDO">
+		select CNT_ID,PROC_INS_ID,CNT_CODE,CNT_NAME,CNT_TYPE,laywer_name,laywer_office,address,amount,money_amount,memo,CNT_RESERVE1,CNT_RESERVE2,CNT_RESERVE3,CNT_RESERVE4,CNT_RESERVE5 from tb_laywer_info where CNT_ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.contact.domain.TbLaywerDO">
+		select CNT_ID,PROC_INS_ID,CNT_CODE,CNT_NAME,CNT_TYPE,laywer_name,laywer_office,address,amount,money_amount,memo,CNT_RESERVE1,CNT_RESERVE2,CNT_RESERVE3,CNT_RESERVE4,CNT_RESERVE5 from tb_laywer_info
+        <where>  
+		  		  <if test="cntId != null and cntId != ''"> and CNT_ID = #{cntId} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="cntCode != null and cntCode != ''"> and CNT_CODE = #{cntCode} </if>
+		  		  <if test="cntName != null and cntName != ''"> and CNT_NAME = #{cntName} </if>
+		  		  <if test="cntType != null and cntType != ''"> and CNT_TYPE = #{cntType} </if>
+		  		  <if test="laywerName != null and laywerName != ''"> and laywer_name = #{laywerName} </if>
+		  		  <if test="laywerOffice != null and laywerOffice != ''"> and laywer_office = #{laywerOffice} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="moneyAmount != null and moneyAmount != ''"> and money_amount = #{moneyAmount} </if>
+		  		  <if test="memo != null and memo != ''"> and memo = #{memo} </if>
+		  		  <if test="cntReserve1 != null and cntReserve1 != ''"> and CNT_RESERVE1 = #{cntReserve1} </if>
+		  		  <if test="cntReserve2 != null and cntReserve2 != ''"> and CNT_RESERVE2 = #{cntReserve2} </if>
+		  		  <if test="cntReserve3 != null and cntReserve3 != ''"> and CNT_RESERVE3 = #{cntReserve3} </if>
+		  		  <if test="cntReserve4 != null and cntReserve4 != ''"> and CNT_RESERVE4 = #{cntReserve4} </if>
+		  		  <if test="cntReserve5 != null and cntReserve5 != ''"> and CNT_RESERVE5 = #{cntReserve5} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by CNT_ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from tb_laywer_info
+		 <where>  
+		  		  <if test="cntId != null and cntId != ''"> and CNT_ID = #{cntId} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="cntCode != null and cntCode != ''"> and CNT_CODE = #{cntCode} </if>
+		  		  <if test="cntName != null and cntName != ''"> and CNT_NAME = #{cntName} </if>
+		  		  <if test="cntType != null and cntType != ''"> and CNT_TYPE = #{cntType} </if>
+		  		  <if test="laywerName != null and laywerName != ''"> and laywer_name = #{laywerName} </if>
+		  		  <if test="laywerOffice != null and laywerOffice != ''"> and laywer_office = #{laywerOffice} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="moneyAmount != null and moneyAmount != ''"> and money_amount = #{moneyAmount} </if>
+		  		  <if test="memo != null and memo != ''"> and memo = #{memo} </if>
+		  		  <if test="cntReserve1 != null and cntReserve1 != ''"> and CNT_RESERVE1 = #{cntReserve1} </if>
+		  		  <if test="cntReserve2 != null and cntReserve2 != ''"> and CNT_RESERVE2 = #{cntReserve2} </if>
+		  		  <if test="cntReserve3 != null and cntReserve3 != ''"> and CNT_RESERVE3 = #{cntReserve3} </if>
+		  		  <if test="cntReserve4 != null and cntReserve4 != ''"> and CNT_RESERVE4 = #{cntReserve4} </if>
+		  		  <if test="cntReserve5 != null and cntReserve5 != ''"> and CNT_RESERVE5 = #{cntReserve5} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.contact.domain.TbLaywerDO">
+		insert into tb_laywer_info
+		(
+			CNT_ID, 
+			PROC_INS_ID, 
+			CNT_CODE, 
+			CNT_NAME, 
+			CNT_TYPE, 
+			laywer_name, 
+			laywer_office, 
+			address, 
+			amount, 
+			money_amount, 
+			memo, 
+			CNT_RESERVE1, 
+			CNT_RESERVE2, 
+			CNT_RESERVE3, 
+			CNT_RESERVE4, 
+			CNT_RESERVE5
+		)
+		values
+		(
+			#{cntId}, 
+			#{procInsId}, 
+			#{cntCode}, 
+			#{cntName}, 
+			#{cntType}, 
+			#{laywerName}, 
+			#{laywerOffice}, 
+			#{address}, 
+			#{amount}, 
+			#{moneyAmount}, 
+			#{memo}, 
+			#{cntReserve1}, 
+			#{cntReserve2}, 
+			#{cntReserve3}, 
+			#{cntReserve4}, 
+			#{cntReserve5}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.contact.domain.TbLaywerDO">
+		update tb_laywer_info 
+		<set>
+			<if test="procInsId != null">PROC_INS_ID = #{procInsId}, </if>
+			<if test="cntCode != null">CNT_CODE = #{cntCode}, </if>
+			<if test="cntName != null">CNT_NAME = #{cntName}, </if>
+			<if test="cntType != null">CNT_TYPE = #{cntType}, </if>
+			<if test="laywerName != null">laywer_name = #{laywerName}, </if>
+			<if test="laywerOffice != null">laywer_office = #{laywerOffice}, </if>
+			<if test="address != null">address = #{address}, </if>
+			<if test="amount != null">amount = #{amount}, </if>
+			<if test="moneyAmount != null">money_amount = #{moneyAmount}, </if>
+			<if test="memo != null">memo = #{memo}, </if>
+			<if test="cntReserve1 != null">CNT_RESERVE1 = #{cntReserve1}, </if>
+			<if test="cntReserve2 != null">CNT_RESERVE2 = #{cntReserve2}, </if>
+			<if test="cntReserve3 != null">CNT_RESERVE3 = #{cntReserve3}, </if>
+			<if test="cntReserve4 != null">CNT_RESERVE4 = #{cntReserve4}, </if>
+			<if test="cntReserve5 != null">CNT_RESERVE5 = #{cntReserve5}</if>
+		</set>
+		where CNT_ID = #{cntId}
+	</update>
+	
+	<delete id="remove">
+		delete from tb_laywer_info where CNT_ID = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from tb_laywer_info where CNT_ID in 
+		<foreach item="cntId" collection="array" open="(" separator="," close=")">
+			#{cntId}
+		</foreach>
+	</delete>
+
+</mapper>
